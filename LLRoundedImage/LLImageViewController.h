@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LLImageTableViewCell.h"
 
 @interface LLImageViewController : UIViewController
+
+- (instancetype)initWithType:(LLImageViewControllerType)type;
 
 @end

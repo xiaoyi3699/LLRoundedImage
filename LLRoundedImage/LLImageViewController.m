@@ -8,30 +8,60 @@
 
 #import "LLImageViewController.h"
 
-@interface LLImageViewController ()
+@interface LLImageViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
-@implementation LLImageViewController
+@implementation LLImageViewController{
+    LLImageViewControllerType _type;
+    NSMutableArray *_images;
+}
+
+- (instancetype)initWithType:(LLImageViewControllerType)type {
+    self = [super init];
+    if (self) {
+        _type      = type;
+        self.title = @"图片展示";
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    _images = [NSMutableArray arrayWithCapacity:32];
+    for (NSInteger i = 0; i < 32; i ++) {
+        NSString *imageName = [NSString stringWithFormat:@"%ld.jpg",(long)i];
+        [_images addObject:[UIImage imageNamed:imageName]];
+    }
+    
+    CGRect rect = self.view.bounds;
+    rect.origin.y = 64;
+    rect.size.height -= 64;
+    _tableView = [[UITableView alloc] initWithFrame:rect];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.tableFooterView = [UIView new];
+    _tableView.rowHeight = 60;
+    [self.view addSubview:_tableView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _images.count;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    LLImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell == nil) {
+        cell = [[LLImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell" type:_type];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    [cell setImage:_images[indexPath.row]];
+    return cell;
 }
-*/
 
 @end

@@ -10,4 +10,14 @@
 
 @interface UIImage (LLAddPart)
 
+/**
+ 圆角图片
+ */
+- (UIImage *)ll_roundImageSize:(CGSize)size radius:(NSInteger)radius;
+
+/**
+ 绘制空心图片
+ */
+- (UIImage *)ll_imageWithShadowFrame:(CGRect)shadowFrame hollowFrame:(CGRect)hollowFrame shadowColor:(UIColor *)shadowColor;
+
 @end

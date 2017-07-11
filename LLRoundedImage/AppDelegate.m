@@ -9,18 +9,26 @@
 #import "AppDelegate.h"
 #import "LLViewController.h"
 
+#if defined(DEBUG) || defined(_DEBUG)
+#import "FHHFPSIndicator.h"
+#endif
+
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-        
+    
+#if defined(DEBUG) || defined(_DEBUG)
+    [[FHHFPSIndicator sharedFPSIndicator] show];
+    [FHHFPSIndicator sharedFPSIndicator].fpsLabelPosition = FPSIndicatorPositionTopLeft;
+#endif
+    
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[LLViewController new]];
     self.window.rootViewController = nav;
     return YES;
