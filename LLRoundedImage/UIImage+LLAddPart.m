@@ -55,17 +55,4 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     CGContextRestoreGState(context);
 }
 
-- (UIImage *)ll_imageWithShadowFrame:(CGRect)shadowFrame hollowFrame:(CGRect)hollowFrame shadowColor:(UIColor *)shadowColor{
-    UIGraphicsBeginImageContextWithOptions(shadowFrame.size, NO, 1);
-    CGContextRef con = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(con, shadowColor.CGColor);
-    CGContextFillRect(con, shadowFrame);
-    CGContextAddEllipseInRect(con, hollowFrame);
-    CGContextSetBlendMode(con, kCGBlendModeClear);
-    CGContextFillPath(con);
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
 @end
